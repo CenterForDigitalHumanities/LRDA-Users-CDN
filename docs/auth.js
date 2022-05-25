@@ -28,7 +28,7 @@ const webAuth = new auth0.WebAuth({
 
 const logout = () => {
     localStorage.removeItem("userToken")
-    delete window.RERUM_USER
+    delete window.LRDA_USER
     document.querySelectorAll('[is="auth-creator"]').forEach(el=>el.connectedCallback())
     webAuth.logout({ returnTo: origin })
 }
@@ -59,12 +59,12 @@ class AuthButton extends HTMLButtonElement {
             const ref = getReferringPage()
             if (ref && ref !== location.href) { location.href = ref }
             localStorage.setItem("userToken", result.idToken)
-            window.RERUM_USER = result.idTokenPayload
-            window.RERUM_USER.authorization = result.accessToken
+            window.LRDA_USER = result.idTokenPayload
+            window.LRDA_USER.authorization = result.accessToken
             document.querySelectorAll('[is="auth-creator"]').forEach(el=>el.connectedCallback())
             this.innerText = `Logout ${RERUM_USER.nickname}`
             this.removeAttribute('disabled')
-            const loginEvent = new CustomEvent('rerum-authenticated',{detail:window.RERUM_USER})
+            const loginEvent = new CustomEvent('rerum-authenticated',{detail:window.LRDA_USER})
             this.dispatchEvent(loginEvent)
         })
     }
@@ -78,7 +78,7 @@ class AuthCreator extends HTMLInputElement {
     }
 
     connectedCallback() {
-        if(!window.RERUM_USER) { return }
+        if(!window.LRDA_USER) { return }
         this.value = RERUM_USER["http://store.rerum.io/agent"] ?? "anonymous"
     }
 }
