@@ -65,7 +65,8 @@ class AuthButton extends HTMLButtonElement {
             this.innerText = `Logout ${window.LRDA_USER.nickname}`
             this.removeAttribute('disabled')
             const loginEvent = new CustomEvent('lrda-authenticated',{detail:window.LRDA_USER})
-            dispatchEvent(loginEvent)
+            dispatchEvent(loginEvent) //For the window
+            this.dispatchEvent(loginEvent) //For the button
         })
     }
 }
