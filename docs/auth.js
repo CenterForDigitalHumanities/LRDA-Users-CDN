@@ -62,7 +62,7 @@ class AuthButton extends HTMLButtonElement {
             window.LRDA_USER = result.idTokenPayload
             window.LRDA_USER.authorization = result.accessToken
             document.querySelectorAll('[is="auth-creator"]').forEach(el=>el.connectedCallback())
-            this.innerText = `Logout ${RERUM_USER.nickname}`
+            this.innerText = `Logout ${window.LRDA_USER.nickname}`
             this.removeAttribute('disabled')
             const loginEvent = new CustomEvent('lrda-authenticated',{detail:window.LRDA_USER})
             this.dispatchEvent(loginEvent)
@@ -79,7 +79,7 @@ class AuthCreator extends HTMLInputElement {
 
     connectedCallback() {
         if(!window.LRDA_USER) { return }
-        this.value = RERUM_USER["http://store.rerum.io/agent"] ?? "anonymous"
+        this.value = window.LRDA_USER["http://store.rerum.io/agent"] ?? "anonymous"
     }
 }
 
